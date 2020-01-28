@@ -72,7 +72,7 @@ def parse_args():
         month, year = map(int, parts)
         end_day = monthrange(year, month)[1]
         
-        args.start_date = '{}-01-{}'.format(month, year)
+        args.start_date = '01-01-2019'.format(month, year)
         args.end_date = '{}-{}-{}'.format(month, end_day, year)
         args.output_file = 'stage1.{:02d}.{:04d}.csv'.format(month, year)
     return args

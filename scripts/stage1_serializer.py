@@ -43,7 +43,7 @@ class Stage1Serializer(object):
 
     async def _write_page(self, page_url):
         text = await self._gettext(page_url)
-        soup = BeautifulSoup(text, features='html5lib')
+        soup = BeautifulSoup(text, features='html')
         trs = soup.select('.responsive tbody tr')
         trs = reversed(trs) # Order by ascending date instead of descending
         infos = map(_get_info, trs)

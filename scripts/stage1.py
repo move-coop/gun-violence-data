@@ -27,6 +27,8 @@ from urllib.parse import parse_qs, urlparse
 
 from stage1_serializer import Stage1Serializer
 
+options = Options()
+
 # Formats as %m/%d/%Y, but does not leave leading zeroes on the month or day.
 # Surprisingly, the syntax for this is different across platforms: https://stackoverflow.com/a/2073189/4077294
 DATE_FORMAT = '%#m/%#d/%Y' if platform.system() == 'Windows' else '%-m/%-d/%Y'

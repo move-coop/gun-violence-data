@@ -23,13 +23,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 #added this to the script
-from selenium.webdriver.chrome.options import Options
+#from selenium.webdriver.chrome.options import Options
 
 from urllib.parse import parse_qs, urlparse
 
 from stage1_serializer import Stage1Serializer
 
-options = Options()
+#options = Options()
 
 setup_selenium()
 
@@ -140,8 +140,8 @@ async def main():
     log.basicConfig(level=args.log_level)
     #added lines 136 and 137
 
-    options.binary_location = "C:\\Program Files\\Chrome\\chrome64_55.0.2883.75\\chrome.exe"
-    driver = webdriver.Chrome(chrome_options = options, executable_path=r'C:\path\to\chromedriver.exe')
+    #options.binary_location = "C:\\Program Files\\Chrome\\chrome64_55.0.2883.75\\chrome.exe"
+    driver = webdriver.Chrome()
     #driver = Chrome()
 
     step = timedelta(days=1)

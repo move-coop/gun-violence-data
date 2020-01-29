@@ -135,8 +135,8 @@ async def main():
     args = parse_args()
     log.basicConfig(level=args.log_level)
     #added lines 136 and 137
-    options.binary_location = "/app/bin/chromium-browser"
-    driver = webdriver.Chrome(chrome_options=options)
+    options.binary_location = "C:\\Program Files\\Chrome\\chrome64_55.0.2883.75\\chrome.exe"
+    driver = webdriver.Chrome(chrome_options = options, executable_path=r'C:\path\to\chromedriver.exe')
     #driver = Chrome()
 
     step = timedelta(days=1)

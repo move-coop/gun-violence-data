@@ -14,6 +14,7 @@ from argparse import ArgumentParser
 from calendar import monthrange
 from datetime import date, timedelta
 from functools import partial
+from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
 from selenium.webdriver import Chrome
 from selenium.webdriver.common.by import By

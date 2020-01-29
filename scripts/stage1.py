@@ -128,7 +128,8 @@ def get_n_pages(driver):
 async def main():
     args = parse_args()
     log.basicConfig(level=args.log_level)
-    driver = Chrome()
+    driver = webdriver.Chrome(executable_path=r"C:\path\to\chromedriver.exe")
+    #driver = Chrome()
 
     step = timedelta(days=1)
     global_start, global_end = dateparser.parse(args.start_date), dateparser.parse(args.end_date)

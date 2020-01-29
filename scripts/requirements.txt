@@ -4,4 +4,3 @@ numpy
 pandas
 python-dateutil
 selenium
-chromium-browser

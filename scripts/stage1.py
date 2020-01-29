@@ -20,6 +20,9 @@ from selenium.webdriver import Chrome
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+#added this to the script
+from selenium.webdriver.chrome.options import Options
+
 from urllib.parse import parse_qs, urlparse
 
 from stage1_serializer import Stage1Serializer
@@ -129,7 +132,9 @@ def get_n_pages(driver):
 async def main():
     args = parse_args()
     log.basicConfig(level=args.log_level)
-    driver = webdriver.Chrome()
+    #added lines 136 and 137
+    options.binary_location = "/app/bin/chromium-browser"
+    driver = webdriver.Chrome(chrome_options=options)
     #driver = Chrome()
 
     step = timedelta(days=1)

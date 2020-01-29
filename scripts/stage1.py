@@ -135,7 +135,7 @@ async def main():
     args = parse_args()
     log.basicConfig(level=args.log_level)
     #added lines 136 and 137
-    options.binary_location = "/app/bin/chromium-browser"
+    options.binary_location = "/urs/bin/chromium-browser"
     driver = webdriver.Chrome(chrome_options=options)
     #driver = Chrome()
 

@@ -31,8 +31,6 @@ from stage1_serializer import Stage1Serializer
 
 #options = Options()
 
-setup_selenium()
-
 # Formats as %m/%d/%Y, but does not leave leading zeroes on the month or day.
 # Surprisingly, the syntax for this is different across platforms: https://stackoverflow.com/a/2073189/4077294
 DATE_FORMAT = '%#m/%#d/%Y' if platform.system() == 'Windows' else '%-m/%-d/%Y'
@@ -141,8 +139,9 @@ async def main():
     #added lines 136 and 137
 
     #options.binary_location = "C:\\Program Files\\Chrome\\chrome64_55.0.2883.75\\chrome.exe"
-    driver = webdriver.Chrome()
+    #driver = webdriver.Chrome()
     #driver = Chrome()
+    driver = setup_selenium()
 
     step = timedelta(days=1)
     global_start, global_end = dateparser.parse(args.start_date), dateparser.parse(args.end_date)

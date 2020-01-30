@@ -8,7 +8,7 @@ GVA_DOMAIN = 'http://www.gunviolencearchive.org'
 
 def _get_info(tr):
     tds = tr.select('td')
-    assert len(tds) == 7
+    assert len(tds) == 8 #changed this from 7 to 8
 
     date, state, city_or_county, address, n_killed, n_injured = [td.contents[0] for td in tds[:6]]
     n_killed, n_injured = map(int, [n_killed, n_injured])

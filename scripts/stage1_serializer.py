@@ -13,10 +13,10 @@ def _get_info(tr):
     date, state, city_or_county, address, n_killed, n_injured = [td.contents[0] for td in tds[1:7]]
     n_killed, n_injured = map(int, [n_killed, n_injured])
 
-    incident_a = tds[6].find('a', string='View Incident')
+    incident_a = tds[7].find('a', string='View Incident')
     incident_url = GVA_DOMAIN + incident_a['href']
 
-    source_a = tds[6].find('a', string='View Source')
+    source_a = tds[7].find('a', string='View Source')
     source_url = source_a['href'] if source_a else ''
 
     return date, state, city_or_county, address, n_killed, n_injured, incident_url, source_url

@@ -6,14 +6,14 @@ import pandas as pd
 from canalespy import setup_environment, logger
 
 from glob import glob
-from parsons import Table, S3, Redshift, utilities
+from parsons import Table, Redshift, utilities
+import os
 
 def main():
     setup_environment()
 
     #create an instance of s3 and redshift 
 
-    s3 = S3()
     rs = Redshift()
     
 
@@ -50,10 +50,10 @@ def main():
         outer_sort(dfs)
 
     giant_df = pd.concat(dfs, ignore_index=True)
-    giant_df.to_csv('stage3.csv',
-                    index=False,
-                    float_format='%g',
-                    encoding='utf-8')
+    #giant_df.to_csv('stage3.csv',
+                    #index=False,
+                    #float_format='%g',
+                    #encoding='utf-8')
 
     # Convert dataframe to a parsons table 
 

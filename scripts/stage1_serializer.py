@@ -10,7 +10,7 @@ def _get_info(tr):
     tds = tr.select('td')
     assert len(tds) == 8 #changed this from 7 to 8
 
-    date, state, city_or_county, address, n_killed, n_injured = [td.contents[0] for td in tds[:6]]
+    date, state, city_or_county, address, n_killed, n_injured = [td.contents[0] for td in tds[1:7]]
     n_killed, n_injured = map(int, [n_killed, n_injured])
 
     incident_a = tds[6].find('a', string='View Incident')

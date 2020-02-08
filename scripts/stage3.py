@@ -65,38 +65,38 @@ def main():
         outer_sort(dfs)
 
         giant_df = pd.concat(dfs, ignore_index=True)
-        #giant_df.to_csv('stage3.csv',
-                    #index=False,
-                    #float_format='%g',
-                    #encoding='utf-8')
+        giant_df.to_csv('stage3.csv',
+                    index=False,
+                    float_format='%g',
+                    encoding='utf-8')
 
         #Logging
 
-        logging.basicConfig()
-        logger = logging.getLogger(__name__)
-        _handler = logging.StreamHandler()
-        _formatter = logging.Formatter('%(levelname)s %(message)s')
-        _handler.setFormatter(_formatter)
-        logger.addHandler(_handler)
-        logger.setLevel('INFO')
+        #logging.basicConfig()
+        #logger = logging.getLogger(__name__)
+        #_handler = logging.StreamHandler()
+        #_formatter = logging.Formatter('%(levelname)s %(message)s')
+        #_handler.setFormatter(_formatter)
+        #logger.addHandler(_handler)
+        #logger.setLevel('INFO')
 
 
         #create an instance of redshift 
-        rs = Redshift(username = os.environ['REDSHIFT_CREDENTIAL_USERNAME'],
-                      password = os.environ['REDSHIFT_CREDENTIAL_PASSWORD'],
-                      host = os.environ['REDSHIFT_HOST'],
-                      port = os.environ['REDSHIFT_PORT'],
-                      db = os.environ['REDSHIFT_DATABASE'])
+        #rs = Redshift(username = os.environ['REDSHIFT_CREDENTIAL_USERNAME'],
+                      #password = os.environ['REDSHIFT_CREDENTIAL_PASSWORD'],
+                      #host = os.environ['REDSHIFT_HOST'],
+                      #port = os.environ['REDSHIFT_PORT'],
+                      #db = os.environ['REDSHIFT_DATABASE'])
 
         # Convert dataframe to a parsons table 
 
-        final_table = Table.from_dataframe(giant_df)
+        #final_table = Table.from_dataframe(giant_df)
 
         #Push table to redshift 
 
-        final_table.to_redshift('cjaf_gvp.gva_2019_data', if_exists='drop')
+        #final_table.to_redshift('cjaf_gvp.gva_2019_data', if_exists='drop')
 
-        logger.info(f"Successfully created GVA 2019 Data Table")
+        #logger.info(f"Successfully created GVA 2019 Data Table")
 
 
 if __name__ == '__main__':

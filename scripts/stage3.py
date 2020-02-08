@@ -27,8 +27,8 @@ def main():
 
     #create an instance of redshift 
 
-    username= os.environ['REDSHIFT_USERNAME']
-    password= os.environ['REDSHIFT_PASSWORD']
+    username=os.environ['REDSHIFT_USERNAME']
+    password=os.environ['REDSHIFT_PASSWORD']
     host=os.environ['REDSHIFT_HOST']
     port=os.environ['REDSHIFT_DB']
     dev=os.environ['REDSHIFT_PORT']

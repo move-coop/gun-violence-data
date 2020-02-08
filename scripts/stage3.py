@@ -32,7 +32,6 @@ def main():
                   port = os.environ['REDSHIFT_PORT'],
                   db = os.environ['REDSHIFT_DATABASE'])
     
-
     STAGE2_GLOB = 'stage2.*.csv'
 
     SCHEMA = {
@@ -65,21 +64,21 @@ def main():
         inner_sort(dfs)
         outer_sort(dfs)
 
-    giant_df = pd.concat(dfs, ignore_index=True)
-    #giant_df.to_csv('stage3.csv',
+        giant_df = pd.concat(dfs, ignore_index=True)
+        #giant_df.to_csv('stage3.csv',
                     #index=False,
                     #float_format='%g',
                     #encoding='utf-8')
 
-    # Convert dataframe to a parsons table 
+        # Convert dataframe to a parsons table 
 
-    final_table = Table.from_dataframe(giant_df)
+        final_table = Table.from_dataframe(giant_df)
 
-    #Push table to redshift 
+        #Push table to redshift 
 
-    final_table.to_redshift('cjaf_gvp.gva_2019_data', if_exists='drop')
+        final_table.to_redshift('cjaf_gvp.gva_2019_data', if_exists='drop')
 
-    logger.info(f"Successfully created GVA 2019 Data Table")
+        logger.info(f"Successfully created GVA 2019 Data Table")
 
 
 if __name__ == '__main__':

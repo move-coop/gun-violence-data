@@ -26,13 +26,6 @@ def main():
 
 
     #create an instance of redshift 
-
-    set_env_var(os.environ['REDSHIFT_PORT'])
-    set_env_var(os.environ['REDSHIFT_DB'])
-    set_env_var(os.environ['REDSHIFT_HOST'])
-    set_env_var(os.environ['REDSHIFT_CREDENTIAL_USERNAME'])
-    set_env_var(os.environ['REDSHIFT_CREDENTIAL_PASSWORD'])
-
     rs = Redshift()
     
 

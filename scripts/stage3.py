@@ -3,16 +3,35 @@
 
 import numpy as np
 import pandas as pd
-from canalespy import setup_environment, logger
+#from canalespy import setup_environment, logger
+import logging
 
 from glob import glob
 from parsons import Table, Redshift, utilities
 import os
 
 def main():
-    setup_environment()
+    
+    #setup_environment()
 
-    #create an instance of s3 and redshift 
+    #Logging
+
+    logging.basicConfig()
+    logger = logging.getLogger(__name__)
+    _handler = logging.StreamHandler()
+    _formatter = logging.Formatter('%(levelname)s %(message)s')
+    _handler.setFormatter(_formatter)
+    logger.addHandler(_handler)
+    logger.setLevel('INFO')
+
+
+    #create an instance of redshift 
+
+    set_env_var(os.environ['REDSHIFT_PORT'])
+    set_env_var(os.environ['REDSHIFT_DB'])
+    set_env_var(os.environ['REDSHIFT_HOST'])
+    set_env_var(os.environ['REDSHIFT_CREDENTIAL_USERNAME'])
+    set_env_var(os.environ['REDSHIFT_CREDENTIAL_PASSWORD'])
 
     rs = Redshift()
     

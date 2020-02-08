@@ -86,9 +86,9 @@ def add_incident_id(df):
     def extract_id(incident_url):
         PREFIX = 'http://www.gunviolencearchive.org/incident/'
         assert incident_url.startswith(PREFIX)
-        return str(incident_url[len(PREFIX):]) #changed from int to str
+        return int(incident_url[len(PREFIX):]) 
 
-    df.insert(0, 'incident_id', df['incident_url'].apply(extract_id))
+    df.insert(0, 'incident_id', df['incident_url'].apply(str(extract_id)))
     return df
 
 async def add_fields_from_incident_url(df, args, predicate=None):

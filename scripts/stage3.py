@@ -26,7 +26,14 @@ def main():
 
 
     #create an instance of redshift 
-    rs = Redshift()
+
+    username= os.environ['REDSHIFT_USERNAME']
+    password= os.environ['REDSHIFT_PASSWORD']
+    host=os.environ['REDSHIFT_HOST']
+    port=os.environ['REDSHIFT_DB']
+    dev=os.environ['REDSHIFT_PORT']
+
+    rs = Redshift(username=username, password=password, host=host, db=dev, port=port)
     
 
     STAGE2_GLOB = 'stage2.*.csv'

@@ -25,7 +25,7 @@ def main():
     logger.setLevel('INFO')
 
 
-    create an instance of redshift 
+    #create an instance of redshift 
     rs = Redshift(username = os.environ['REDSHIFT_CREDENTIAL_USERNAME'],
                   password = os.environ['REDSHIFT_CREDENTIAL_PASSWORD'],
                   host = os.environ['REDSHIFT_HOST'],

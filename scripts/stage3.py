@@ -25,12 +25,12 @@ def main():
     logger.setLevel('INFO')
 
 
-    #create an instance of redshift 
-    #rs = Redshift(username = os.environ['REDSHIFT_CREDENTIAL_USERNAME'],
-                  #password = os.environ['REDSHIFT_CREDENTIAL_PASSWORD'],
-                  #host = os.environ['REDSHIFT_HOST'],
-                  #port = os.environ['REDSHIFT_PORT'],
-                  #db = os.environ['REDSHIFT_DATABASE'])
+    create an instance of redshift 
+    rs = Redshift(username = os.environ['REDSHIFT_CREDENTIAL_USERNAME'],
+                  password = os.environ['REDSHIFT_CREDENTIAL_PASSWORD'],
+                  host = os.environ['REDSHIFT_HOST'],
+                  port = os.environ['REDSHIFT_PORT'],
+                  db = os.environ['REDSHIFT_DATABASE'])
     
     STAGE2_GLOB = 'stage2.*.csv'
 
@@ -57,34 +57,27 @@ def main():
         # we assume all incidents in the former took place earlier than all incidents in the latter.
         dfs.sort(key=lambda df: df.loc[0].date)
 
-    def main():
+    #def main():
         # Sort the dataframes by ascending date, then sort by ascending date *within* each dataframe,
         # then merge into 1 giant CSV.
-        dfs = [load_csv(fname) for fname in glob(STAGE2_GLOB)]
-        inner_sort(dfs)
-        outer_sort(dfs)
+    dfs = [load_csv(fname) for fname in glob(STAGE2_GLOB)]
+    inner_sort(dfs)
+    outer_sort(dfs)
 
-        giant_df = pd.concat(dfs, ignore_index=True)
+    giant_df = pd.concat(dfs, ignore_index=True)
         #giant_df.to_csv('stage3.csv',
                     #index=False,
                     #float_format='%g',
                     #encoding='utf-8')
 
 
-        #create an instance of redshift 
-        rs = Redshift(username = os.environ['REDSHIFT_CREDENTIAL_USERNAME'],
-                      password = os.environ['REDSHIFT_CREDENTIAL_PASSWORD'],
-                      host = os.environ['REDSHIFT_HOST'],
-                      port = os.environ['REDSHIFT_PORT'],
-                      db = os.environ['REDSHIFT_DATABASE'])
+    # Convert dataframe to a parsons table 
 
-        # Convert dataframe to a parsons table 
+    final_table = Table.from_dataframe(giant_df)
 
-        final_table = Table.from_dataframe(giant_df)
+    #Push table to redshift 
 
-        #Push table to redshift 
-
-        final_table.to_redshift('cjaf_gvp.gva_2019_data', if_exists='drop')
+    final_table.to_redshift('cjaf_gvp.gva_2019_data', if_exists='drop')
 
     logger.info(f"Successfully created GVA 2019 Data Table")
 

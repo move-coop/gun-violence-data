@@ -111,7 +111,7 @@ def _stringify_dict(d, insep='::', outsep='||'):
 class Stage2Extractor(object):
     def extract_fields(self, text, ctx):
         log_first_call()
-        soup = BeautifulSoup(text, features='html5lib')
+        soup = BeautifulSoup(text, features='html')
 
         location_fields = self._extract_location_fields(soup, ctx)
         participant_fields = self._extract_participant_fields(soup)

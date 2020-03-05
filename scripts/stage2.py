@@ -79,16 +79,23 @@ def load_input(args):
     return pd.read_csv(args.input_fname,
                        dtype=SCHEMA,
                        parse_dates=['date'],
-                       encoding='utf-8')
+                       encoding='utf-8').head(n=1)
 
 def add_incident_id(df):
     log_first_call()
-    def extract_id(incident_url):
-        PREFIX = 'http://www.gunviolencearchive.org/incident/'
-        assert incident_url.startswith(PREFIX)
-        return int(incident_url[len(PREFIX):]) 
+    PREFIX = 'http://www.gunviolencearchive.org/incident/'
+    # def extract_id(incident_url):
+    #     PREFIX = 'http://www.gunviolencearchive.org/incident/'
+    #     assert incident_url.startswith(PREFIX)
+    #     return int(incident_url[len(PREFIX):]) 
 
-    df.insert(0, 'incident_id', df['incident_url'].apply(str(extract_id)))
+    df['incident_url'] = df['incident_url'].astype(str) 
+    df['incident_id'] = df['incident_url'].str.replace(PREFIX, '')
+    cols = list(df.columns)
+    cols = [cols[-1]] + cols[:-1]
+    df = df[cols]
+
+    # df.insert(0, 'incident_id', df['incident_url'].apply(str(extract_id)))
     return df
 
 async def add_fields_from_incident_url(df, args, predicate=None):
@@ -146,6 +153,12 @@ async def main():
     log.basicConfig(level=args.log_level)
 
     df = load_input(args)
+
+    async with Stage2Session(limit_per_host=args.conn_limit) as session:
+        # list of coros of tuples of Fields
+        tasks = df.apply(get_fields_from_incident_url, axis=1)
+        # list of (tuples of Fields) and (exceptions)
+        fields = await asyncio.gather(*tasks, return_exceptions=True)
 
     if args.amend:
         output_fname = args.input_fname + args.output_fname

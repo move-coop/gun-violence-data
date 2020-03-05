@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 # stage 1: initial import of data fom gunviolencearchive.org using web scraping techniques
 
+import sys
+sys.path.insert(0, './lib/python3.7/site-packages')
+
 import asyncio
 import dateutil.parser as dateparser
 import logging as log

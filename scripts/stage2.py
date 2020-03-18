@@ -79,7 +79,7 @@ def load_input(args):
     return pd.read_csv(args.input_fname,
                        dtype=SCHEMA,
                        parse_dates=['date'],
-                       encoding='utf-8').head(n=1)
+                       encoding='utf-8')
 
 def add_incident_id(df):
     log_first_call()

@@ -2,9 +2,11 @@ import asyncio
 import math
 import numpy as np
 import platform
+import requests
 import sys
 import traceback as tb
 
+import cfscrape
 from aiohttp import ClientResponse, ClientSession, TCPConnector
 from aiohttp.client_exceptions import ClientOSError, ClientResponseError
 from aiohttp.hdrs import CONTENT_TYPE
@@ -54,14 +56,15 @@ class Stage2Session(object):
 
     async def _get(self, url, average_wait=10, rng_base=2):
         while True:
+            scraper = cfscrape.create_scraper()
             try:
-                resp = await self._sess.get(url)
+                resp = scraper.get(url)
             except Exception as exc:
                 status = _status_from_exception(exc)
                 if not status:
                     raise
             else:
-                status = resp.status
+                status = resp.status_code
                 if status < 500: # Suceeded or client error
                     return resp
                 # It's a server error. Dispose the response and retry.
@@ -74,14 +77,13 @@ class Stage2Session(object):
     async def _get_fields_from_incident_url(self, row):
         incident_url = row['incident_url']
         resp = await self._get(incident_url)
-        async with resp:
-            resp.raise_for_status()
-            ctype = resp.headers.get(CONTENT_TYPE, '').lower()
-            mimetype = ctype[:ctype.find(';')]
-            if mimetype in ('text/htm', 'text/html'):
-                text = await resp.text()
-            else:
-                raise NotImplementedError("Encountered unknown mime type {}".format(mimetype))
+        resp.raise_for_status()
+        ctype = resp.headers.get(CONTENT_TYPE, '').lower()
+        mimetype = ctype[:ctype.find(';')]
+        if mimetype in ('text/htm', 'text/html'):
+            text = resp.text
+        else:
+            raise NotImplementedError("Encountered unknown mime type {}".format(mimetype))
 
         ctx = Context(address=row['address'],
                       city_or_county=row['city_or_county'],

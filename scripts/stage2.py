@@ -114,7 +114,7 @@ async def add_fields_from_incident_url(df, args, predicate=None):
 
     async with Stage2Session(limit_per_host=args.conn_limit) as session:
         # list of coros of tuples of Fields
-        tasks = subset.apply(session.get_fields_from_incident_url, axis=1)
+        tasks = [session.get_fields_from_incident_url(row) for _, row in subset.iterrows()]
         # list of (tuples of Fields) and (exceptions)
         fields = await asyncio.gather(*tasks, return_exceptions=True)
 
@@ -156,7 +156,7 @@ async def main():
 
     async with Stage2Session(limit_per_host=args.conn_limit) as session:
         # list of coros of tuples of Fields
-        tasks = df.apply(get_fields_from_incident_url, axis=1)
+        tasks = [session.get_fields_from_incident_url(row) for _, row in df.iterrows()]
         # list of (tuples of Fields) and (exceptions)
         fields = await asyncio.gather(*tasks, return_exceptions=True)
 
